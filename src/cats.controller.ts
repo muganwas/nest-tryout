@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Query, Body } from '@nestjs/common';
 import { CatService } from './cats.service';
+import { Cat } from './dto';
 
 @Controller('cats')
 export class CatsController {
@@ -11,8 +12,8 @@ export class CatsController {
   }
 
   @Post()
-  createBread(@Body('catBreed') breed: string): string {
-    return this.catService.newCat(breed);
+  createBreed(@Body() cat: Cat): string {
+    return this.catService.newCat(cat.catBreed);
   }
 
   @Get('/brown')
