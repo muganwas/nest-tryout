@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Query, Body } from '@nestjs/common';
+import { Controller, Get, Post, Query, Body, Param } from '@nestjs/common';
 import { CatService } from './cats.service';
 import { Cat } from './dto';
 
@@ -14,6 +14,10 @@ export class CatsController {
   @Post()
   createBreed(@Body() cat: Cat): string {
     return this.catService.newCat(cat.catBreed);
+  }
+  @Post('/update/:breedName')
+  updateBreed(@Param('breedName') breedName: string): Promise<string> {
+    return this.catService.updateCat(breedName);
   }
 
   @Get('/brown')

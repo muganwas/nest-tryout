@@ -14,4 +14,9 @@ export class CatService {
   newCat(breed: string): string {
     return 'We have a new breed: ' + breed;
   }
+  updateCat(breed: string): Promise<string> {
+    return new Promise((resolve) => {
+      resolve('You have updated breed. ' + breed);
+    });
+  }
 }
