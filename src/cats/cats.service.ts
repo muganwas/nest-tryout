@@ -1,9 +1,15 @@
 import { Injectable } from '@nestjs/common';
-
+const breeds = ['Cheshire', 'Egyptian', 'South Brown'];
 @Injectable()
 export class CatService {
   whatCat(catName?: string): string {
     return catName ?? 'What cat?!';
+  }
+  whatBreed(breedNum: number): string {
+    if (breeds[breedNum]) {
+      return breeds[breedNum];
+    }
+    return 'NA';
   }
   brownCat(): string {
     return "I'm a brown cat!";

@@ -1,6 +1,16 @@
-import { Controller, Get, Post, Query, Body, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Query,
+  Body,
+  Param,
+  ParseIntPipe,
+  UsePipes,
+} from '@nestjs/common';
 import { CatService } from './cats.service';
-import { Cat } from './dto/create-cat.dto';
+import { ValidationPipe } from './pipes/validation.pipe';
+import { CreateCatDto, createCatSchema } from './schemas/createCat.schema';
 
 @Controller('cats')
 export class CatsController {
@@ -11,8 +21,14 @@ export class CatsController {
     return this.catService.whatCat(catName);
   }
 
+  @Get('/breed/:breedNum')
+  getCatByNumber(@Param('breedNum', ParseIntPipe) breedNum: number): string {
+    return this.catService.whatBreed(breedNum);
+  }
+
   @Post()
-  createBreed(@Body() cat: Cat): string {
+  @UsePipes(new ValidationPipe(createCatSchema))
+  createBreed(@Body() cat: CreateCatDto): string {
     return this.catService.newCat(cat.catBreed);
   }
   @Post('/update/:breedName')
